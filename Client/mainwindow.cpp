@@ -114,8 +114,8 @@ void	MainWindow::readTcpData()
         {
             _step++;
             _netsoul = 1;
-            ui->loginpage->hide();
-            ui->displaypage->show();
+            ui->loginPage->hide();
+            //ui->displaypage->show();
             modifyStatus("Handshaking worked! You are now netsouled!");
         }
         else

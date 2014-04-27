@@ -13,13 +13,13 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -30,16 +30,13 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QStackedWidget *stackedWidget;
-    QWidget *loginpage;
+    QFrame *loginPage;
     QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout;
+    QVBoxLayout *layout;
     QLabel *video;
     QLineEdit *_loginInput;
     QLineEdit *_passwordInput;
     QPushButton *goButton;
-    QWidget *displaypage;
-    QLabel *label;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
 
@@ -47,7 +44,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(338, 594);
+        MainWindow->resize(336, 603);
         QPalette palette;
         QBrush brush(QColor(255, 255, 255, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -62,58 +59,45 @@ public:
         MainWindow->setPalette(palette);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        stackedWidget = new QStackedWidget(centralWidget);
-        stackedWidget->setObjectName(QStringLiteral("stackedWidget"));
-        stackedWidget->setGeometry(QRect(10, 10, 321, 501));
-        QPalette palette1;
-        palette1.setBrush(QPalette::Active, QPalette::Base, brush);
-        palette1.setBrush(QPalette::Active, QPalette::Window, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Base, brush);
-        palette1.setBrush(QPalette::Inactive, QPalette::Window, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Base, brush1);
-        palette1.setBrush(QPalette::Disabled, QPalette::Window, brush1);
-        stackedWidget->setPalette(palette1);
-        loginpage = new QWidget();
-        loginpage->setObjectName(QStringLiteral("loginpage"));
-        verticalLayoutWidget = new QWidget(loginpage);
+        centralWidget->setEnabled(true);
+        loginPage = new QFrame(centralWidget);
+        loginPage->setObjectName(QStringLiteral("loginPage"));
+        loginPage->setEnabled(true);
+        loginPage->setGeometry(QRect(10, 10, 311, 541));
+        loginPage->setFrameShape(QFrame::StyledPanel);
+        loginPage->setFrameShadow(QFrame::Raised);
+        verticalLayoutWidget = new QWidget(loginPage);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 10, 301, 481));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        verticalLayoutWidget->setGeometry(QRect(10, 10, 291, 501));
+        layout = new QVBoxLayout(verticalLayoutWidget);
+        layout->setSpacing(6);
+        layout->setContentsMargins(11, 11, 11, 11);
+        layout->setObjectName(QStringLiteral("layout"));
+        layout->setContentsMargins(0, 0, 0, 0);
         video = new QLabel(verticalLayoutWidget);
         video->setObjectName(QStringLiteral("video"));
 
-        verticalLayout->addWidget(video);
+        layout->addWidget(video);
 
         _loginInput = new QLineEdit(verticalLayoutWidget);
         _loginInput->setObjectName(QStringLiteral("_loginInput"));
 
-        verticalLayout->addWidget(_loginInput);
+        layout->addWidget(_loginInput);
 
         _passwordInput = new QLineEdit(verticalLayoutWidget);
         _passwordInput->setObjectName(QStringLiteral("_passwordInput"));
 
-        verticalLayout->addWidget(_passwordInput);
+        layout->addWidget(_passwordInput);
 
         goButton = new QPushButton(verticalLayoutWidget);
         goButton->setObjectName(QStringLiteral("goButton"));
 
-        verticalLayout->addWidget(goButton);
+        layout->addWidget(goButton);
 
-        stackedWidget->addWidget(loginpage);
-        displaypage = new QWidget();
-        displaypage->setObjectName(QStringLiteral("displaypage"));
-        stackedWidget->addWidget(displaypage);
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 740, 401, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 338, 25));
+        menuBar->setGeometry(QRect(0, 0, 336, 25));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -121,18 +105,14 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
-
-
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        video->setText(QString());
+        video->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         goButton->setText(QApplication::translate("MainWindow", "Go!", 0));
-        label->setText(QApplication::translate("MainWindow", "Status: Offline", 0));
     } // retranslateUi
 
 };
