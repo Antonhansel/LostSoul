@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
-    <height>603</height>
+    <width>334</width>
+    <height>704</height>
    </rect>
   </property>
   <property name="palette">
@@ -90,8 +90,51 @@
       <x>10</x>
       <y>10</y>
       <width>311</width>
-      <height>541</height>
+      <height>631</height>
      </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>2</green>
+          <blue>39</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>2</green>
+          <blue>39</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>26</green>
+          <blue>54</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -105,7 +148,7 @@
        <x>10</x>
        <y>10</y>
        <width>291</width>
-       <height>501</height>
+       <height>551</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="layout">
@@ -113,6 +156,16 @@
        <widget class="QLabel" name="video">
         <property name="text">
          <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">background-image: url(&quot;images/text.png&quot;) no-repeat;</string>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
@@ -138,7 +191,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>336</width>
+     <width>334</width>
      <height>25</height>
     </rect>
    </property>

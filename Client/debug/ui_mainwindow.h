@@ -34,6 +34,7 @@ public:
     QWidget *verticalLayoutWidget;
     QVBoxLayout *layout;
     QLabel *video;
+    QLabel *label;
     QLineEdit *_loginInput;
     QLineEdit *_passwordInput;
     QPushButton *goButton;
@@ -44,7 +45,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(336, 603);
+        MainWindow->resize(334, 704);
         QPalette palette;
         QBrush brush(QColor(255, 255, 255, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -63,12 +64,21 @@ public:
         loginPage = new QFrame(centralWidget);
         loginPage->setObjectName(QStringLiteral("loginPage"));
         loginPage->setEnabled(true);
-        loginPage->setGeometry(QRect(10, 10, 311, 541));
+        loginPage->setGeometry(QRect(10, 10, 311, 631));
+        QPalette palette1;
+        QBrush brush2(QColor(0, 2, 39, 255));
+        brush2.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::Base, brush2);
+        palette1.setBrush(QPalette::Inactive, QPalette::Base, brush2);
+        palette1.setBrush(QPalette::Disabled, QPalette::Base, brush1);
+        loginPage->setPalette(palette1);
+        loginPage->setAutoFillBackground(false);
+        loginPage->setStyleSheet(QStringLiteral("border: 0px;"));
         loginPage->setFrameShape(QFrame::StyledPanel);
         loginPage->setFrameShadow(QFrame::Raised);
         verticalLayoutWidget = new QWidget(loginPage);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 10, 291, 501));
+        verticalLayoutWidget->setGeometry(QRect(10, 10, 291, 551));
         layout = new QVBoxLayout(verticalLayoutWidget);
         layout->setSpacing(6);
         layout->setContentsMargins(11, 11, 11, 11);
@@ -78,6 +88,12 @@ public:
         video->setObjectName(QStringLiteral("video"));
 
         layout->addWidget(video);
+
+        label = new QLabel(verticalLayoutWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setStyleSheet(QStringLiteral("background-image: url(\"images/text.png\") no-repeat;"));
+
+        layout->addWidget(label);
 
         _loginInput = new QLineEdit(verticalLayoutWidget);
         _loginInput->setObjectName(QStringLiteral("_loginInput"));
@@ -97,7 +113,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 336, 25));
+        menuBar->setGeometry(QRect(0, 0, 334, 25));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -112,6 +128,7 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         video->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        label->setText(QString());
         goButton->setText(QApplication::translate("MainWindow", "Go!", 0));
     } // retranslateUi
 
