@@ -10,5 +10,5 @@ QT += network
 unix:OBJECTS_DIR = objs/
 
 # Input
-HEADERS += header/MainWindow.hpp
-SOURCES += srcs/main.cpp srcs/MainWindow.cpp
+HEADERS += header/MainWindow.hpp header/Login.hpp
+SOURCES += srcs/main.cpp srcs/MainWindow.cpp srcs/Login.cpp

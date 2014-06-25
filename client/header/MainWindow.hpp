@@ -7,7 +7,6 @@
 # define WIDTH 300
 # define HEIGHT 800
 
-//inclde QT
 # include <QMainWindow>
 # include <QDesktopServices>
 # include <QtWidgets/QApplication>
@@ -35,18 +34,15 @@
 # include <QTimer>
 # include <QMovie>
 
-//Includes CPP
 # include <sstream>
 # include <iostream>
 # include <sstream>
 
+# include "Login.hpp"
 
 class MainWindow : public QWidget
 {
     Q_OBJECT
-    //
-    /*Login page*/
-    //
 public slots:
     // void        startNetsoul();
     // void        readTcpData();
@@ -64,11 +60,8 @@ private:
     QByteArray  sendAuth();
     void        initHand(QString input);
 protected:
-    QLabel      *_video;
-    QPushButton *_go;
-    QVBoxLayout *_mainLayout;
-    QLineEdit   *_loginInput;
-    QLineEdit   *_passwordInput;
+    
+    Login       *_login;
     QString	    _md5;
     QString	    _ipclient;
     QString	    _portclient;

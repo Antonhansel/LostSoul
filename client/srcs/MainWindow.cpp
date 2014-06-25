@@ -12,10 +12,12 @@
 
 MainWindow::MainWindow() : QWidget()
 {
-	initWindow();
+    _login = new Login(this);
+	//initWindow();
    // _statusBar->showMessage("Status: Offline");
     // QObject::connect(goButton, SIGNAL(clicked()), this,SLOT(startNetsoul(void)));
     //showVideo();
+
 }
 
 MainWindow::~MainWindow()
@@ -25,32 +27,14 @@ MainWindow::~MainWindow()
 
 void	MainWindow::initWindow()
 {
-    setWindowTitle(TITLE);
-    setFixedSize(WIDTH, HEIGHT);
-    initInput();
-    initOther();
-    _mainLayout = new QVBoxLayout();
-    // _mainLayout->addWidget(_video);
-    _mainLayout->addWidget(_loginInput);
-    _mainLayout->addWidget(_passwordInput);
-    _mainLayout->addWidget(_go);
-    setLayout(_mainLayout);
 }
 
 void	MainWindow::initOther()
 {
-    showVideo();
-	_go = new QPushButton();
-	_go->setText("Go!");
 }
 
 void	MainWindow::initInput()
 {
-	_loginInput = new QLineEdit();
-	_passwordInput = new QLineEdit();
-	_passwordInput->setPlaceholderText("password");
-    _passwordInput->setEchoMode(QLineEdit::Password);
-    _loginInput->setPlaceholderText("login");
 }
 
 void    MainWindow::showVideo()
