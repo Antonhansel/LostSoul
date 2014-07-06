@@ -7,25 +7,46 @@ Login::Login(MainWindow *window) : QWidget()
 	_window = new QWidget();
 	_window->show();
     _window->setWindowTitle("LostSoul 0.5 Beta - Login");
-    _window->setFixedSize(350, 800);
+
+    QSize size = _window->sizeHint();
+    QDesktopWidget* desktop = QApplication::desktop();
+    int width = desktop->width();
+    int height = desktop->height();
+    int mw = size.width();
+    int mh = size.height();
+    int centerW = (width/2) - (mw/2);
+    int centerH = (height/2) - (mh/2);
+    _window->move(centerW - (350 /2), centerH - (800 /2));
+    _window->setFixedSize(325, 800);
     initInput();
     initOther();
+    QLabel *image = new QLabel();
+    image->setPixmap(QPixmap("./images/text.png"));
+    image->setFixedSize(300, 100);
     _mainLayout = new QGridLayout();
-    _mainLayout->addWidget(_video, 0, 0);
-    _mainLayout->addWidget(_loginInput, 1, 0);
-    _mainLayout->addWidget(_passwordInput, 2, 0);
-    _mainLayout->addWidget(_go, 3, 0);
+    _mainLayout->addWidget(image, 0, 0);
+    _mainLayout->addWidget(_video, 1, 0);
+    _mainLayout->addWidget(_loginInput, 2, 0);
+    _mainLayout->addWidget(_passwordInput, 3, 0);
+    _mainLayout->addWidget(_go, 4, 0);
     _window->setLayout(_mainLayout);
-    _window->setStyleSheet("color: #CFD6D7; background-color: #403075");
+    _window->setStyleSheet("color: #CFD6D7; background-color: #0F0D24");
+    //a enlever
 }
 
 Login::~Login(){}
 
+void    Login::initConnexion()
+{
+    _mainWindow->initHandShake(_loginInput->text(), _passwordInput->text());
+}
+
 void	Login::initOther()
 {
     showVideo();
-	_go = new QPushButton();
-	_go->setText("Go!");
+    _go = new QPushButton();
+    _go->setText("Go!");
+    connect(_go, SIGNAL(clicked()), SLOT(initConnexion()));
 }
 
 void	Login::initInput()

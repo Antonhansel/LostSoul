@@ -1,5 +1,5 @@
-#ifndef LOGIN_HPP_
-# define LOGIN_HPP_
+#ifndef _NETWORK_HPP_
+# define _NETWORK_HPP_
 
 # include <QMainWindow>
 # include <QDesktopServices>
@@ -28,31 +28,33 @@
 # include <QTimer>
 # include <QMovie>
 # include <QDesktopWidget>
-# include <QGraphicsPixmapItem>
 
 class MainWindow;
-class Login : public QWidget
+class Network : public QWidget
 {
 	Q_OBJECT
 public:
-	Login(MainWindow *);
-	~Login();
+	Network(MainWindow *);
+	~Network();
+	void 	tryNetsoul(QString, QString);	
 public slots:
-	void 	initConnexion();
+    void        startNetsoul();
+    void        readTcpData();
 private:
-	void 	initOther();
-	void 	initInput();
-	void 	showVideo();
+	void 		initHand(QString);
+	QByteArray 	sendAuth();
+	void 		modifyStatus(const char *);
 private:
-	QMovie 		*_movie;
-	QWidget 	*_window;
-	MainWindow	*_mainWindow;
-	Login 		*_login;
-    QLabel      *_video;
-    QPushButton *_go;
-    QGridLayout *_mainLayout;
-    QLineEdit   *_loginInput;
-    QLineEdit   *_passwordInput;
+	MainWindow *_parent;
+	//data
+	QString	    _md5;
+	QString	    _ipclient;
+	QString	    _portclient;
+	int         _step;
+	QString	    _username;
+	QString	    _password;
+	QTcpSocket  *_pSocket;
+	int         _netsoul;
 };
 
-#endif /* LOGIN_HPP_ */
+#endif /*_NETWORK_HPP_*/

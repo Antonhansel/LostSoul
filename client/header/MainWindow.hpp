@@ -2,10 +2,10 @@
 # define _MAINWINDOW_HPP_
 
 # define DEBUG 1
-# define IPLOCAL "10.42.1.59"
-# define TITLE "LostSoul v0.1"
 # define WIDTH 300
 # define HEIGHT 800
+# define IP "ns-server.epitech.eu"
+# define PORT 4242
 
 # include <QMainWindow>
 # include <QDesktopServices>
@@ -38,38 +38,20 @@
 # include <iostream>
 # include <sstream>
 
+# include "Network.hpp"
 # include "Login.hpp"
 
 class MainWindow : public QWidget
 {
     Q_OBJECT
-public slots:
-    // void        startNetsoul();
-    // void        readTcpData();
 public:
     MainWindow();
     ~MainWindow();
+    void        initHandShake(QString, QString);
 private:
-    void        showVideo();
-    void        initOther();
-    void        initWindow();
-    void        initInput();
-    void        modifyStatus(QString input);
-    QString     parsUser(QString input);
-    void        parsData(QString input);
-    QByteArray  sendAuth();
-    void        initHand(QString input);
-protected:
-    
+protected:  
     Login       *_login;
-    QString	    _md5;
-    QString	    _ipclient;
-    QString	    _portclient;
-    int         _step;
-    QString	    _username;
-    QString	    _password;
-    QTcpSocket  *_pSocket;
-    int         _netsoul;
+    Network     *_network;
 };
 
 #endif /*!_MAINWINDOW_H*/
