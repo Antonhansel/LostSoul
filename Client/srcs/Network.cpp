@@ -6,11 +6,66 @@ Network::Network(MainWindow *parent)
 	_parent = parent;
 }
 
+Network::~Network(){}
+
+void 	Network::modifyStatus(const char *status)
+{
+	_parent->setStatus(QString(status));
+	_parent->setConnected(true);
+}
+
+//
+//HANDSHAKING STUFF	
+//
+
 void 	Network::tryNetsoul(QString username, QString password)
 {
 	_username = username;
 	_password = password;
+	std::cout << _password.toStdString() << std::endl;
 	startNetsoul();
+}
+
+void	Network::readTcpData()
+{
+	QByteArray   	data = _pSocket->readAll();
+
+	std::cout << data.data() << std::endl;
+	if (_step == 0)
+	{
+		initHand(data.data());
+		data = "auth_ag ext_user none none\n";
+		_pSocket->write(data);
+		_step++;
+	}
+	if (_step == 1)
+	{
+		_pSocket->write(sendAuth());
+		_step++;
+	}
+	else if (_step == 2)
+	{
+		if (data.startsWith("rep 002 -- cmd end") == true)
+		{
+			_step++;
+			_netsoul = 1;
+			modifyStatus("Handshaking worked! You are now netsouled!");
+		}
+		else
+		{
+			_netsoul = 0;
+			modifyStatus("Handshaking failed.");
+			_pSocket->close();
+		}
+	}
+	else if (_step == 3)
+	{
+		if (data.startsWith("ping "))
+			_pSocket->write(data);
+	}
+		// else
+		// 	parsData(data);
+	// }
 }
 
 void	Network::startNetsoul()
@@ -23,11 +78,6 @@ void	Network::startNetsoul()
 		modifyStatus("Connexion established. Handshaking with server...");
 	else
 		_netsoul = -1;
-}
-
-void 	Network::modifyStatus(const char *status)
-{
-	std::cout << status << std::endl;
 }
 
 void	Network::initHand(QString input)
@@ -74,46 +124,3 @@ QByteArray	Network::sendAuth()
 	data.append(tosend);
 	return (data);
 }
-
-void	Network::readTcpData()
-{
-	QByteArray   	data = _pSocket->readAll();
-
-	if (_step == 0)
-	{
-		initHand(data.data());
-		data = "auth_ag ext_user none none\n";
-		_pSocket->write(data);
-		_step++;
-	}
-	if (_step == 1)
-	{
-		_pSocket->write(sendAuth());
-		_step++;
-	}
-	else if (_step == 2)
-	{
-		if (data.startsWith("rep 002 -- cmd end") == true)
-		{
-			_step++;
-			_netsoul = 1;
-			modifyStatus("Handshaking worked! You are now netsouled!");
-		}
-		else
-		{
-			_netsoul = 0;
-			modifyStatus("Handshaking failed.");
-			_pSocket->close();
-		}
-	}
-	// else if (_step == 3)
-	// {
-	// 	if (data.startsWith("ping "))
-	// 		_pSocket->write(data);
-	// 	else
-	// 		parsData(data);
-	// }
-}
-
-Network::~Network()
-{}

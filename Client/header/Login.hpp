@@ -29,6 +29,7 @@
 # include <QMovie>
 # include <QDesktopWidget>
 # include <QGraphicsPixmapItem>
+# include <QStatusBar>
 
 class MainWindow;
 class Login : public QWidget
@@ -39,11 +40,13 @@ public:
 	~Login();
 public slots:
 	void 	initConnexion();
+	void 	setStatus(QString);
 private:
 	void 	initOther();
 	void 	initInput();
 	void 	showVideo();
 private:
+	QStatusBar 	*_statusBar;
 	QMovie 		*_movie;
 	QWidget 	*_window;
 	MainWindow	*_mainWindow;

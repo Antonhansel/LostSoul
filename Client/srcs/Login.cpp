@@ -23,18 +23,24 @@ Login::Login(MainWindow *window) : QWidget()
     QLabel *image = new QLabel();
     image->setPixmap(QPixmap("./images/text.png"));
     image->setFixedSize(300, 100);
+    _statusBar = new QStatusBar(_window);
     _mainLayout = new QGridLayout();
     _mainLayout->addWidget(image, 0, 0);
     _mainLayout->addWidget(_video, 1, 0);
     _mainLayout->addWidget(_loginInput, 2, 0);
     _mainLayout->addWidget(_passwordInput, 3, 0);
     _mainLayout->addWidget(_go, 4, 0);
+    _mainLayout->addWidget(_statusBar, 5, 0);
     _window->setLayout(_mainLayout);
     _window->setStyleSheet("color: #CFD6D7; background-color: #0F0D24");
-    //a enlever
 }
 
 Login::~Login(){}
+
+void    Login::setStatus(QString status)
+{
+    _statusBar->showMessage(status);
+}
 
 void    Login::initConnexion()
 {
