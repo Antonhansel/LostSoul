@@ -1,4 +1,4 @@
 LostSoul
 ========
 
-A netsoul client
+A netsoul client with fancy colors, no shit.
