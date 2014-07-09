@@ -1,6 +1,9 @@
 #ifndef _NETWORK_HPP_
 # define _NETWORK_HPP_
 
+//user_cmd 922:user:1/3:chouag_m@10.12.180.160:~:
+//chromesoul:epitech_2017 | msg qsdqsdqsd dst=ribeau_a$
+
 # include <QMainWindow>
 # include <QDesktopServices>
 # include <QtWidgets/QApplication>
@@ -40,13 +43,15 @@ public:
 public slots:
     void        startNetsoul();
     void        readTcpData();
+    void 		sendTcpData(QByteArray);
+    void 		parsData(QString);
+    QString		parsUser(QString);
 private:
 	void 		initHand(QString);
 	QByteArray 	sendAuth();
-	void 		modifyStatus(const char *);
+	void 		modifyStatus(const char *, int);
 private:
 	MainWindow *_parent;
-	//data
 	QString	    _md5;
 	QString	    _ipclient;
 	QString	    _portclient;

@@ -8,9 +8,9 @@ Network::Network(MainWindow *parent)
 
 Network::~Network(){}
 
-void 	Network::modifyStatus(const char *status)
+void 	Network::modifyStatus(const char *status, int stat)
 {
-	_parent->setStatus(QString(status));
+	_parent->setStatus(QString(status), stat);
 	_parent->setConnected(true);
 }
 
@@ -22,8 +22,13 @@ void 	Network::tryNetsoul(QString username, QString password)
 {
 	_username = username;
 	_password = password;
-	std::cout << _password.toStdString() << std::endl;
 	startNetsoul();
+}
+
+void 	Network::sendTcpData(QByteArray data)
+{
+	std::cout << data.data() << std::endl;
+	_pSocket->write(data);
 }
 
 void	Network::readTcpData()
@@ -35,37 +40,37 @@ void	Network::readTcpData()
 	{
 		initHand(data.data());
 		data = "auth_ag ext_user none none\n";
-		_pSocket->write(data);
+		sendTcpData(data);
 		_step++;
 	}
-	if (_step == 1)
+	else if (_step == 1)
 	{
-		_pSocket->write(sendAuth());
+		sendTcpData(sendAuth());
 		_step++;
 	}
 	else if (_step == 2)
 	{
-		if (data.startsWith("rep 002 -- cmd end") == true)
+		if (!data.startsWith("rep 033 -- ext user identification fail"))
 		{
 			_step++;
 			_netsoul = 1;
-			modifyStatus("Handshaking worked! You are now netsouled!");
+			modifyStatus("Handshaking worked! You are now netsouled!", 1);
 		}
 		else
 		{
+			_step = 0;
 			_netsoul = 0;
-			modifyStatus("Handshaking failed.");
+			modifyStatus("Handshaking failed.", 0);
 			_pSocket->close();
 		}
 	}
 	else if (_step == 3)
 	{
 		if (data.startsWith("ping "))
-			_pSocket->write(data);
+		sendTcpData(data);
+		else
+			parsData(data);
 	}
-		// else
-		// 	parsData(data);
-	// }
 }
 
 void	Network::startNetsoul()
@@ -75,7 +80,7 @@ void	Network::startNetsoul()
 	_pSocket->connectToHost(IP, PORT);
 	_step = 0;
 	if (_pSocket->waitForConnected(50000))
-		modifyStatus("Connexion established. Handshaking with server...");
+		modifyStatus("Connexion established. Handshaking with server...", 0);
 	else
 		_netsoul = -1;
 }
@@ -99,6 +104,38 @@ void	Network::initHand(QString input)
 			_portclient = (QString)(sub.c_str());
 		i++;
 	}
+}
+
+QString		Network::parsUser(QString input)
+{
+  QStringList		list;
+
+  list = input.split(":");
+  input.clear();
+  input += list.at(3);
+  return (input);
+}
+
+void		Network::parsData(QString input)
+{
+  std::string           sub;
+  std::istringstream	iss(input.toUtf8().constData());
+  QUrl                  url;
+  QString 				user;
+  QString 				message;
+
+  while (iss)
+    {
+      sub = "";
+      iss >> sub;
+      if (sub == "msg")
+        {
+            iss >> sub;
+            user = parsUser(input);
+            message = QString(sub.c_str());
+            _parent->addChat(user, message);
+        }
+    }
 }
 
 QByteArray	Network::sendAuth()

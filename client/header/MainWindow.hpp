@@ -40,6 +40,7 @@
 
 # include "Network.hpp"
 # include "Login.hpp"
+# include "Chat.hpp"
 
 class MainWindow : public QWidget
 {
@@ -48,10 +49,14 @@ public:
     MainWindow();
     ~MainWindow();
     void        initHandShake(QString, QString);
+    void        setStatus(QString status, int);
+    void 		setConnected(bool);
+	void 		addChat(QString, QString); 
 private:
 protected:  
     Login       *_login;
     Network     *_network;
+    bool 		_connected;
 };
 
 #endif /*!_MAINWINDOW_H*/

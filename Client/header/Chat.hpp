@@ -1,5 +1,5 @@
-#ifndef LOGIN_HPP_
-# define LOGIN_HPP_
+#ifndef _CHAT_HPP_
+# define _CHAT_HPP_
 
 # include <QMainWindow>
 # include <QDesktopServices>
@@ -31,31 +31,25 @@
 # include <QGraphicsPixmapItem>
 # include <QStatusBar>
 
-class MainWindow;
-class Login : public QWidget
+class Chat : public QWidget
 {
 	Q_OBJECT
 public:
-	Login(MainWindow *);
-	~Login();
-public slots:
-	void 	initConnexion();
-	void 	setStatus(QString, int);
+	Chat(QString user);
+	~Chat();
 private:
-	void 	initOther();
-	void 	initInput();
-	void 	showVideo();
+	void 	addSentMessage(QString);
+	void 	addRecievedMessage(QString);
 private:
-	QStatusBar 	*_statusBar;
-	QMovie 		*_movie;
-	QWidget 	*_window;
-	MainWindow	*_mainWindow;
-	Login 		*_login;
-    QLabel      *_video;
-    QPushButton *_go;
-    QGridLayout *_mainLayout;
-    QLineEdit   *_loginInput;
-    QLineEdit   *_passwordInput;
+	QWidget 		*_window;
+	QString		_user;
+	QStatusBar	*_statusBar;
+	QGridLayout	*_mainLayout;
+	QTextEdit 	*_chat;
+	QLineEdit	*_input;
+	QPushButton	*_send;
+	QGridLayout	*_topLayout;
+	QGridLayout	*_bottomLayout;
 };
 
-#endif /* LOGIN_HPP_ */
+#endif /*_CHAT_HPP_*/

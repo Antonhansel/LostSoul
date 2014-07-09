@@ -37,9 +37,11 @@ Login::Login(MainWindow *window) : QWidget()
 
 Login::~Login(){}
 
-void    Login::setStatus(QString status)
+void    Login::setStatus(QString status, int stat)
 {
     _statusBar->showMessage(status);
+    if (stat)
+        _window->hide();
 }
 
 void    Login::initConnexion()
